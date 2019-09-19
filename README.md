@@ -2,7 +2,7 @@
  * @Author: shoestrong
  * @Date: 2019-09-19 19:17:28
  * @Description: file content
- * @LastEditTime: 2019-09-19 19:17:28
+ * @LastEditTime: 2019-09-19 19:21:13
  * @LastEditors: shoestrong
  -->
 # build-i8n-lang-config
@@ -12,7 +12,7 @@
 
 使用
 ```
-npm run dev (or node index.js)
+npm run build // (or node index.js)
 ```
 
 在local文件夹中写入json格式，区分各语言，生成模块会以文件名生成
