@@ -2,7 +2,7 @@
  * @Author: shoestrong
  * @Date: 2019-09-19 19:17:28
  * @Description: file content
- * @LastEditTime: 2019-09-20 11:26:32
+ * @LastEditTime: 2019-09-21 02:41:59
  * @LastEditors: shoestrong
  -->
 # build-i8n-lang-config
@@ -16,7 +16,7 @@ npm run build // (or node index.js)
 ```
 
 ```
-const BuildI18nLang = require('build-i8n-lang-config')
+const {BuildI18nLang} = require('build-i8n-lang-config')
 
 // 可配置
 const i18nLang = new BuildI18nLang({

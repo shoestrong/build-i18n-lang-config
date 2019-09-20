@@ -2,7 +2,7 @@
  * @Author: shoestrong
  * @Date: 2019-09-19 15:13:28
  * @Description: file content
- * @LastEditTime: 2019-09-20 10:58:03
+ * @LastEditTime: 2019-09-21 02:43:25
  * @LastEditors: shoestrong
  */
 const fs = require('fs');
@@ -23,7 +23,7 @@ class BuildI18nLang {
       entryPath: './local',
       ...props
     }
-    this._init()
+    Object.keys(props).length > 0 && this._init()
   }
 
   setLangs(lang, isDefault) {
@@ -159,5 +159,3 @@ class BuildI18nLang {
 }
 
 module.exports.BuildI18nLang = BuildI18nLang
-module.exports.buildI18nLang = new BuildI18nLang()
-
