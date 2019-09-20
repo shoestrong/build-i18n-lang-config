@@ -2,7 +2,7 @@
  * @Author: shoestrong
  * @Date: 2019-09-19 19:17:28
  * @Description: file content
- * @LastEditTime: 2019-09-19 19:21:13
+ * @LastEditTime: 2019-09-20 11:26:32
  * @LastEditors: shoestrong
  -->
 # build-i8n-lang-config
@@ -13,6 +13,22 @@
 使用
 ```
 npm run build // (or node index.js)
+```
+
+```
+const BuildI18nLang = require('build-i8n-lang-config')
+
+// 可配置
+const i18nLang = new BuildI18nLang({
+  langs: ['zh_CN', 'zh_TW', 'en'],
+  defaultLangs: ['zh_CN', 'en'],
+  outPath: './lang',
+  entryPath: './local'
+})
+// 设置langs配置，第二个参数确定是否为defaultLangs
+i18nLang.setLangs('zh_TW', true)
+// 设置出入口路径，第二个参数可设置outPath和entryPath
+i18nLang.setPath('./lang', 'outPath')
 ```
 
 在local文件夹中写入json格式，区分各语言，生成模块会以文件名生成
