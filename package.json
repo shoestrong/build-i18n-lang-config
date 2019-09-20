@@ -1,10 +1,14 @@
 {
   "name": "build-i8n-lang-config",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "构建i18n中lang配置文件，为i18n而生",
   "main": "index.js",
   "scripts": {
     "build": "node index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:shoestrong/build-i8n-lang-config"
   },
   "keywords": [
     "i18n",
@@ -12,7 +16,11 @@
     "vue-i18n"
   ],
   "author": "zqc_2007@yeah.net",
-  "license": "ISC",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/shoestrong/build-i8n-lang-config/issues"
+  },
+  "homepage": "https://github.com/shoestrong/build-i8n-lang-config",
   "dependencies": {
     "chalk": "^2.4.2",
     "inquirer": "^7.0.0",
