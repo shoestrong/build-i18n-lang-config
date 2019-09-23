@@ -1,8 +1,8 @@
 /*
  * @Author: shoestrong
  * @Date: 2019-09-19 15:13:28
- * @Description: file content
- * @LastEditTime: 2019-09-21 02:43:25
+ * @Description: build-i8n-lang-config 为i18n而生
+ * @LastEditTime: 2019-09-23 16:29:05
  * @LastEditors: shoestrong
  */
 const fs = require('fs');
@@ -14,8 +14,9 @@ const ora = require('ora');
 const {join} = path
 
 
-class BuildI18nLang {
+class BuildI18nLangConfig {
   constructor(props = {}) {
+    this.dirCache = {}
     this.config = {
       langs: ['zh_CN', 'zh_TW', 'en'],
       defaultLangs: ['zh_CN', 'en'],
@@ -23,7 +24,7 @@ class BuildI18nLang {
       entryPath: './local',
       ...props
     }
-    Object.keys(props).length > 0 && this._init()
+    this._init()
   }
 
   setLangs(lang, isDefault) {
@@ -38,35 +39,58 @@ class BuildI18nLang {
 
   _init() {
     this._isHasDirectoryMkdir(this.config.entryPath, true)
-    const spinner = ora('检测是否存在local文件夹和配置文件...')
-    spinner.start()
-    setTimeout(() => {
-      spinner.stop()
-      // 交互式提示
-      inquirer.prompt([{
-          type: 'checkbox',
-          choices: this.config.langs,
-          name: 'checked',
-          message: '选择要输出的语言，空格可多选',
-          default: this.config.defaultLangs
-        },
-        {
-          type: 'list',
-          choices: this._findSync(this.config.entryPath),
-          name: 'select',
-          message: '选择一个需要编译的文件',
-          default: false
-        }
-      ]).then(res => {
-        console.log(chalk.cyan('选择的输出语言是：' + res.checked))
-        console.log(chalk.cyan('选择的文件是：' + res.select))
-        let obj = {}
-        res.checked.length > 0 && res.checked.map(lang => {
-          obj[lang] = {}
+    this._filterLangs().then(res => {
+      this.defaultLangs = res
+      const spinner = ora('检测是否存在local文件夹和配置文件...')
+      spinner.start()
+      setTimeout(() => {
+        spinner.stop()
+        // 交互式提示
+        inquirer.prompt([{
+            type: 'checkbox',
+            choices: this.config.langs,
+            name: 'checked',
+            message: '选择要输出的语言，空格可多选',
+            default: this.config.defaultLangs
+          },
+          {
+            type: 'list',
+            choices: this._findSync(this.config.entryPath),
+            name: 'select',
+            message: '选择一个需要编译的文件',
+            default: false
+          }
+        ]).then(res => {
+          console.log(chalk.cyan('选择的输出语言是：' + res.checked))
+          console.log(chalk.cyan('选择的文件是：' + res.select))
+          let obj = {}
+          res.checked.length > 0 && res.checked.map(lang => {
+            obj[lang] = {}
+          })
+          this._writeJson(res.select, obj)
         })
-        this._writeJson(res.select, obj)
-      })
-    }, 1000)
+      }, 1000)
+    }).catch(err => {
+      console.log(chalk.cyan(err))
+    })
+  }
+
+  _filterLangs() {
+    return new Promise((resolve, reject) => {
+      if (this.config.langs && this.config.langs.length === 0) {
+        reject('默认参数langs不能为空')
+      } else {
+        let newLangs = []
+        this.config.defaultLangs.forEach(dlang => {
+          this.config.langs.forEach(lang => {
+            if (dlang === lang) {
+              newLangs.push(lang)
+            }
+          })
+        })
+        resolve(newLangs)
+      }
+    })
   }
 
   _writeLocalFile(path) {
@@ -136,10 +160,11 @@ class BuildI18nLang {
           setTimeout(() => {
             fs.writeFile(`${_this.config.outPath}/${o}/${selectedName}.js`, jsStr, function (err) {
               if (err) {
-                return new Error(err);
+                console.log(err)
+              } else {
+                console.log(chalk.green(`已生成 ${_this.config.outPath}/${o}/${selectedName}.js 完毕`))
               }
               spinner.stop()
-              console.log(chalk.green(`已生成 ${_this.config.outPath}/${o}/${selectedName}.js 完毕`))
             })
           }, 1000)
         })
@@ -148,14 +173,29 @@ class BuildI18nLang {
   }
   
   // 是否已经创建过文件夹
-  _isHasDirectoryMkdir(outPath, file) {
+  _isHasDirectoryMkdir(outPath, is) {
     fs.exists(outPath, exists => {
       if (!exists) {
-        fs.mkdirSync(outPath)
-        if (file) this._writeLocalFile(outPath)
+        // fs.mkdirSync(outPath)
+        this._mkdir(outPath)
+        if (is) {
+          this._writeLocalFile(outPath)
+        }
       }
     });
   }
+
+  // 递归创建文件夹
+  _mkdir(dirname) {
+    if (fs.existsSync(dirname)) {
+      return true;
+    } else {
+      if (this._mkdir(path.dirname(dirname))) {
+        fs.mkdirSync(dirname);
+        return true;
+      }
+    }
+  }
 }
 
-module.exports.BuildI18nLang = BuildI18nLang
+module.exports = BuildI18nLangConfig
