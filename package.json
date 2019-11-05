@@ -1,5 +1,5 @@
 {
-  "name": "build-i8n-lang-config",
+  "name": "@shoestrong/build-i8n-lang-config",
   "version": "1.0.5",
   "description": "构建i18n中lang配置文件，为i18n而生",
   "main": "lib/index.js",
