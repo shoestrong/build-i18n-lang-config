@@ -34,11 +34,11 @@ node index.js
 demo.json
 ```
 {
-	"message": {
-		"zh_CN": "为i18n而生",
-		"en": "Born to i18n",
-		"zh_TW": "為i18n而生"
-	}
+  "message": {
+    "zh_CN": "为i18n而生",
+    "en": "Born to i18n",
+    "zh_TW": "為i18n而生"
+  }
 }
 ```
 
@@ -56,6 +56,6 @@ user
 文件内容，比如user/lang/zh_CN/demo.js
 ```
 export default {
-	"message": "为i18n而生"
+  "message": "为i18n而生"
 }
 ```
