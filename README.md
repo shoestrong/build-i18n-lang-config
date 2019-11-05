@@ -5,12 +5,12 @@
 
 使用
 ```
-npm install build-i18n-lang-config --save
+npm install @shoestrong/build-i18n-lang-config --save
 ```
 
 根目录下index.js
 ```
-const BuildI18nLangConfig = require('build-i18n-lang-config')
+const BuildI18nLangConfig = require('@shoestrong/build-i18n-lang-config')
 
 // 可配置
 const i18nLang = new BuildI18nLangConfig({
