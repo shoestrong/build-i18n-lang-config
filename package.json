@@ -22,6 +22,9 @@
     "url": "https://github.com/shoestrong/build-i8n-lang-config/issues"
   },
   "homepage": "https://github.com/shoestrong/build-i8n-lang-config",
+  "publishConfig": {
+    "registry": "https://npm.pkg.github.com/"
+  },
   "dependencies": {
     "chalk": "^2.4.2",
     "inquirer": "^7.0.0",
