@@ -1,22 +1,16 @@
-<!--
- * @Author: shoestrong
- * @Date: 2019-09-19 19:17:28
- * @Description: file content
- * @LastEditTime: 2019-09-23 16:35:36
- * @LastEditors: shoestrong
- -->
-# build-i8n-lang-config
+# build-i18n-lang-config
 构建i18n中lang配置文件
 
 解决在使用vue-i18n中要手动写入每种语言，避免反复人工操作
 
 使用
 ```
-npm run build // (or node index.js)
+npm install build-i18n-lang-config --save
 ```
 
+根目录下index.js
 ```
-const {BuildI18nLangConfig} = require('build-i8n-lang-config')
+const BuildI18nLangConfig = require('build-i18n-lang-config')
 
 // 可配置
 const i18nLang = new BuildI18nLangConfig({
@@ -29,6 +23,11 @@ const i18nLang = new BuildI18nLangConfig({
 i18nLang.setLangs('zh_TW', true)
 // 设置出入口路径，第二个参数可设置outPath和entryPath
 i18nLang.setPath('./user/langs', 'outPath')
+```
+
+运行
+```
+node index.js
 ```
 
 在local文件夹中写入json格式，区分各语言，生成模块会以文件名生成
